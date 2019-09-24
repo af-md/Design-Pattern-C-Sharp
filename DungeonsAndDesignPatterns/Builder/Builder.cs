@@ -4,90 +4,85 @@ using NUnit.Framework.Constraints;
 
 namespace Builder
 {
-    public abstract class HighForrestBuilder
+    public abstract class ForestBuilder
     {
-        protected HighForrest forrest;
+        protected Forest Forest;
 
-        public void CreateForrest()
+        public void CreateForest()
         {
-            forrest = new HighForrest();
+            Forest = new Forest();
         }
 
         public abstract void BuildLand();
         public abstract void BuildTrees();
         public abstract void BuildSpeciality();
 
-        public HighForrest GetForrest()
+        public Forest GetForest()
         {
-            return forrest;
+            return Forest;
         }
     }
 
-    public class DragonHighForrestBuilder : HighForrestBuilder
+    public class DragonForestBuilder : ForestBuilder
     {
         
         public override void BuildLand()
         {
             
-            forrest.Length = 8;   
-            Console.WriteLine("Forrest land length: {0}" , forrest.Length);
+            Forest.Size = 8;   
+            Console.WriteLine("Forest land length: {0}" , Forest.Size);
         }
 
         public override void BuildTrees()
         {
-            forrest.NumberOfTrees = 10; 
-            Console.WriteLine("Trees built: {0}" , forrest.NumberOfTrees);
+            Forest.NumberOfTrees = 10; 
+            Console.WriteLine("Trees built: {0}" , Forest.NumberOfTrees);
         }
 
         public override void BuildSpeciality()
         {
-            forrest.SpecialFeature = "Dragons populated";
-            Console.WriteLine("Special feature of this forrest: {0}" , forrest.SpecialFeature);
+            Forest.SpecialFeature = "Dragons populated";
+            Console.WriteLine("Special feature of this forest: {0}" , Forest.SpecialFeature);
 
         }
     }
 
-    public class DinosaursHighForrestBuilder : HighForrestBuilder
+    public class DinosaursForestBuilder : ForestBuilder
     {
         public override void BuildLand()
         {
-            forrest.Length = 5;   
-            Console.WriteLine("Forrest land length: {0}" , forrest.Length);
+            Forest.Size = 5;   
+            Console.WriteLine("Forest land length: {0}" , Forest.Size);
         }
 
         public override void BuildTrees()
         {
-            forrest.NumberOfTrees = 7; 
-            Console.WriteLine("Trees built: {0}" , forrest.NumberOfTrees);
+            Forest.NumberOfTrees = 7; 
+            Console.WriteLine("Trees built: {0}" , Forest.NumberOfTrees);
         }
 
         public override void BuildSpeciality()
         {
-            forrest.SpecialFeature = "Dinosaurs populated";
-            Console.WriteLine("Special feature of this forrest: {0}" , forrest.SpecialFeature);
+            Forest.SpecialFeature = "Dinosaurs populated";
+            Console.WriteLine("Special feature of this forest: {0}" , Forest.SpecialFeature);
         }
     }
 
-    public class HighForrest
+    public class Forest
     {
-        public int Length { get; set; } = 10;
+        public int Size { get; set; } = 10;
         public int NumberOfTrees { get; set; } = 5;
         public string SpecialFeature { get; set; } = "";
     }
     
     public class Wizard
     {
-        public void MakeForrest(HighForrestBuilder builder)
+        public void MakeForest(ForestBuilder builder)
         {
-            builder.CreateForrest();
+            builder.CreateForest();
             builder.BuildLand();
             builder.BuildTrees();
             builder.BuildSpeciality();
-        }
-
-        public HighForrest GetForrest(HighForrestBuilder builder)
-        {
-            return builder.GetForrest();
         }
     }
 
@@ -98,30 +93,30 @@ namespace Builder
         public void BuilderTest()
         {
             Wizard wizard = new Wizard();
-            DinosaursHighForrestBuilder dino = new DinosaursHighForrestBuilder();
-            DragonHighForrestBuilder dragon = new DragonHighForrestBuilder();
+            DinosaursForestBuilder dino = new DinosaursForestBuilder();
+            DragonForestBuilder dragon = new DragonForestBuilder();
             
-            // Use make forest and dino to build the forrest with dinosaurs.
-            Console.WriteLine("Dinosaurs forrest builder output");
-            wizard.MakeForrest(dino);
+            // Use make forest and dino to build the forest with dinosaurs.
+            Console.WriteLine("Dinosaurs forest builder output");
+            wizard.MakeForest(dino);
 
-            // Use make forest and dragons to build the forrest with dragons.
-            Console.WriteLine("Dragon forrest builder");
-            wizard.MakeForrest(dragon);
+            // Use make forest and dragons to build the forest with dragons.
+            Console.WriteLine("Dragon forest builder");
+            wizard.MakeForest(dragon);
 
             // Retrieve the composite/constructed object
-            HighForrest forrestWithDinosaurs = wizard.GetForrest(dino);
-            HighForrest forrestWithDragon = dragon.GetForrest();
+            Forest forestWithDinosaurs = dino.GetForest();
+            Forest forestWithDragon = dragon.GetForest();
             
             //output
-            //Dinosaurs forrest builder output
-            //Forrest land length: 5
+            //Dinosaurs forest builder output
+            //Forest land length: 5
             //Trees built: 7
-            //Special feature of this forrest: Dinosaurs populated
-            //Dragon forrest builder
-            //Forrest land length: 8
+            //Special feature of this forest: Dinosaurs populated
+            //Dragon forest builder
+            //Forest land length: 8
             //Trees built: 10
-            //Special feature of this forrest: Dragons populated
+            //Special feature of this forest: Dragons populated
 
         }
     }

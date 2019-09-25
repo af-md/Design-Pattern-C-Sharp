@@ -11,23 +11,14 @@ namespace Singleton
     {
         private static SingletonMagicBook uniqueInstance;
 
-        private static int Count { get; set; } = 0;
-
         private bool IsBorrowed { get; set; } = false;
         
         // we need to protect this method somehow
         public static SingletonMagicBook Instance()
         {
-            if (Count == 0)
-            {
-                uniqueInstance = new SingletonMagicBook();
-                Count++;
-                return uniqueInstance;
-            }
-            else return uniqueInstance;
-            
+            return uniqueInstance ?? (uniqueInstance = new SingletonMagicBook());
         }
-        
+
         public bool BorrowBook()
         {
             if (!IsBorrowed)  return IsBorrowed = true; 
@@ -50,9 +41,13 @@ namespace Singleton
     {
         public SingletonMagicBook Book;
 
-        public void BorrowMagicBook()
+        public GoblinWizard()
         {
             Book = SingletonMagicBook.Instance();
+        }
+
+        public void BorrowMagicBook()
+        {
             Console.WriteLine(Book.BorrowBook() ? "Book borrowed" : "Can't borrow");
         }
 
@@ -68,9 +63,13 @@ namespace Singleton
     {
         public SingletonMagicBook Book;
 
-        public void BorrowMagicBook()
+        public ElfWizard()
         {
             Book = SingletonMagicBook.Instance();
+        }
+
+        public void BorrowMagicBook()
+        {
             Console.WriteLine(Book.BorrowBook() ? "Book borrowed" : "Can't borrow");
         }
         

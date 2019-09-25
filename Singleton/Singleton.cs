@@ -14,16 +14,6 @@ namespace Singleton
         private static int Count { get; set; } = 0;
 
         private bool IsBorrowed { get; set; } = false;
-
-        public void SingletonOperation()
-        {
-            // return something 
-        }
-
-        public void GetSingletonData()
-        {
-            //return SingletonData = "Test";
-        }
         
         // we need to protect this method somehow
         public static SingletonMagicBook Instance()
@@ -34,29 +24,26 @@ namespace Singleton
                 Count++;
                 return uniqueInstance;
             }
-            else
-            {
-                return uniqueInstance;
-            }
+            else return uniqueInstance;
+            
         }
-
+        
         public bool BorrowBook()
         {
-            if (IsBorrowed == false)
-            {
-                IsBorrowed = true;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!IsBorrowed)  return IsBorrowed = true; 
+            else  return false; 
+        }
+
+        public void ReturnBook()
+        {
+            if (IsBorrowed) IsBorrowed = false; 
         }
     }
 
     public interface IWizard
     {
         void BorrowMagicBook();
+        void ReturnBook();
     }
 
     public class GoblinWizard : IWizard
@@ -66,17 +53,32 @@ namespace Singleton
         public void BorrowMagicBook()
         {
             Book = SingletonMagicBook.Instance();
-            Book.BorrowBook();
-            Console.WriteLine("Book borrowed");
+            Console.WriteLine(Book.BorrowBook() ? "Book borrowed" : "Can't borrow");
+        }
+
+        public void ReturnBook()
+        {
+            Book.ReturnBook();
+            Console.WriteLine("Book returned");
+
         }
     }
 
     public class ElfWizard : IWizard
     {
+        public SingletonMagicBook Book;
 
         public void BorrowMagicBook()
         {
-            
+            Book = SingletonMagicBook.Instance();
+            Console.WriteLine(Book.BorrowBook() ? "Book borrowed" : "Can't borrow");
+        }
+        
+
+        public void ReturnBook()
+        {
+            Book.ReturnBook();
+            Console.WriteLine("Book returned");
         }
     }
 
@@ -88,7 +90,29 @@ namespace Singleton
         public void TestSingletonPattern()
         {
             IWizard goblin = new GoblinWizard();
+           
+            IWizard elf = new ElfWizard();
+            
+            // Borrow the single book instance
             goblin.BorrowMagicBook();
+            
+            // Try to borrow the book instance 
+            elf.BorrowMagicBook();
+            
+            // Return book instance 
+            goblin.ReturnBook();
+            
+            // Try to borrow again 
+            elf.BorrowMagicBook();
+            
+            
+            //Output
+            //Book borrowed
+            //Can't borrow
+            //Book returned
+            //Book borrowed
+
+            
         }
     }
 }

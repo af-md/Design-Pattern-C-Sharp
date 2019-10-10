@@ -37,26 +37,15 @@ namespace Proxy
 
     }
 
-
-    public class Enemy
-    {
-        protected KingProxy KingProxy;
-
-        public void UseProxy()
-        {
-            KingProxy = new KingProxy();
-            KingProxy.Talk();
-            KingProxy.Decide();
-        }
-    }
     [TestFixture]
     public class ClientTest
     {
         [Test]
         public void ProxyTest()
         {
-            Enemy client = new Enemy();
-            client.UseProxy();
+            var KingProxy = new KingProxy();
+            KingProxy.Talk();
+            KingProxy.Decide();
         }
     }
 }

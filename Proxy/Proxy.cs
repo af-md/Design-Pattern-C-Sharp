@@ -1,7 +1,7 @@
-namespace Proxy
 using System;
 using NUnit.Framework;
 
+namespace Proxy
 {
     public interface IRoyals
     {
@@ -12,12 +12,6 @@ using NUnit.Framework;
 
     public class King : IRoyals
     {
-        // The constructor is to show the implementation of the pattern
-        public King()
-        {
-            
-        }
-
         public void Talk() => Console.WriteLine("I am here. Kiss my hand");
         
         public void Decide()  => Console.WriteLine("We will never concede");
@@ -25,13 +19,15 @@ using NUnit.Framework;
 
     public class KingProxy : IRoyals
     {
+        private King king;
 
-        public King King;
-
-        public KingProxy()
+        public King King 
         {
-            // you don't necessarily need to assign the object here
-            King = new King();
+            get
+            {
+                if (king == null) king = new King();
+                return king;
+            }
         }
 
         public void Talk() => King.Talk();

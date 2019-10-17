@@ -89,6 +89,13 @@ namespace Adapter
                 dollin.StrongSpell(1);
 
                 mollin.StrongSpell("weak1");
+                
+                
+                // Output:
+                
+                // Weak1 Abaracadabra
+                // Strong 1 Abaracadabra
+                // Strong 1 Abaracadabra
 
             }
         }

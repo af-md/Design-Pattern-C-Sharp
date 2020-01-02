@@ -3,16 +3,16 @@ using NUnit.Framework;
 
 namespace Command
 {
-    public  interface  ICommand
+    public  interface  Command
     {
         void execute(); 
     }
 
-    public class FireBowlCommand : ICommand
+    public class FireBowlConcreteCommand : Command
     {
         public SlaveWizard Wizard;
 
-        public FireBowlCommand(SlaveWizard wizard)
+        public FireBowlConcreteCommand(SlaveWizard wizard)
         {
             Wizard = wizard; 
         }
@@ -23,11 +23,11 @@ namespace Command
         }
     }
 
-    public class AcidSplashCommand : ICommand
+    public class AcidSplashConcreteCommand : Command
     {
         public SlaveWizard Wizard;
 
-        public AcidSplashCommand(SlaveWizard wizard)
+        public AcidSplashConcreteCommand(SlaveWizard wizard)
         {
             Wizard = wizard; 
         }
@@ -38,11 +38,11 @@ namespace Command
         }
     }
     
-    public class EvilGoblin
+    public class EvilGoblinInvoker
     {
-        private ICommand Command;
+        private Command Command;
 
-        public void SetCommand(ICommand command)
+        public void SetCommand(Command command)
         {
             Command = command; 
         }
@@ -53,7 +53,7 @@ namespace Command
         }
     }
 
-    public class SlaveWizard
+    public class SlaveWizardReceiver
     {
         public void FireBowl()
         {
@@ -73,11 +73,11 @@ namespace Command
         {
             //Assign the commands to the goblins
             var enslavedWizard = new SlaveWizard();
-            var fireBowlCommand = new FireBowlCommand(enslavedWizard);
-            var acidSplashCommand = new AcidSplashCommand(enslavedWizard);
-            var dodlin = new EvilGoblin();
+            var fireBowlCommand = new FireBowlConcreteCommand(enslavedWizard);
+            var acidSplashCommand = new AcidSplashConcreteCommand(enslavedWizard);
+            var dodlin = new EvilGoblinInvoker();
             dodlin.SetCommand(fireBowlCommand);
-            var maggie = new EvilGoblin();
+            var maggie = new EvilGoblinInvoker();
             maggie.SetCommand(acidSplashCommand);
             
             //Execute the command from the goblins/invokers 

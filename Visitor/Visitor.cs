@@ -18,6 +18,10 @@ namespace DungeonsAndDesignPatterns.Visitor
     {
         public string Name { get; set; }
         public int HealthPoints { get; set; }
+        
+        
+        
+        
 
         public Character(string name, int baseHP)
         {
